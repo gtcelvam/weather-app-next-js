@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import { debounce, getGeoLocation } from "@/utils/helpers";
 import {
   ForecastPositionType,
@@ -12,9 +12,11 @@ import SearchBar from "../ui-elements/search";
 import { LocationPin } from "@/assests/icons";
 import ForcastDetails from "@/utils/helpers/forcast";
 import DropDown from "../ui-elements/drop-down";
+import { WeatherContext } from "../provider";
 
 const Header = () => {
   //state values
+  const { handleCurrentWeather } = useContext(WeatherContext);
   const [userLocation, setUserLocation] = useState<InitialForcastDetail | null>(
     null
   );
@@ -26,10 +28,21 @@ const Header = () => {
     ? S.SearchDropDownContainer
     : "hidden";
 
+  const handleDropDownClick = async (id: number | string, name?: string) => {
+    let report = {
+      name,
+      ...(await ForcastDetails.getCurrentWeatherByKey(id)),
+    };
+    handleCurrentWeather(report);
+    console.log("Id : ", id);
+    setSearchResult([]);
+  };
+
   useEffect(() => {
     const getData = async () => {
       const data = await getInitialData();
       setUserLocation(data as InitialForcastDetail);
+      handleCurrentWeather(data);
     };
     if (!userLocation) getData();
   }, []);
@@ -51,12 +64,14 @@ const Header = () => {
       {/* Left Section */}
       <div></div>
       {/* Left Section Ends Here */}
-
       <div className={S.HeaderSearchBarContainer}>
         <SearchBar placeHolder="Search Location" onChange={handleInputChange} />
-        <DropDown list={searchResult} className={searchDropDownStyle} />
+        <DropDown
+          list={searchResult}
+          className={searchDropDownStyle}
+          handleChange={handleDropDownClick}
+        />
       </div>
-
       {/* Right Section */}
       <div className={S.HeaderLocationContainer}>
         <div className={S.LocationDetailsContainer}>

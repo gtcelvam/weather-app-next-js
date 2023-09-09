@@ -1,7 +1,8 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import S from "./style";
 import { CloudIcon, MapIcon, MenuIcon, SettingsIcon } from "@/assests/icons";
 import IconContainer from "@/components/ui-elements/icons";
+import { WeatherContext } from "@/components/provider";
 
 const IconArr = [
   { icon: <CloudIcon />, title: "Weather" },
@@ -11,12 +12,15 @@ const IconArr = [
 ];
 
 const SideBar = () => {
+  const { handleToggle } = useContext(WeatherContext);
+
   return (
     <div className={S.SideBarContainer}>
-      {IconArr.map((item) => (
+      {IconArr.map((item, index) => (
         <div
           key={item.title}
           className="flex flex-col items-center justify-center"
+          onClick={() => handleToggle(index)}
         >
           <SideBarMenu key={item.title} Icon={item.icon} title={item.title} />
         </div>

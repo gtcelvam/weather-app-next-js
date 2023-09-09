@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import WeatherProvider from "@/components/provider";
 import MainComponent from "@/components/ui-group/mainBar";
 import SideBar from "@/components/ui-group/sideBar";
 import { Inter } from "next/font/google";
@@ -11,12 +12,14 @@ const mainSection =
 
 export default function Home() {
   return (
-    <main className={mainClass}>
-      <SideBar />
-      <div className={mainSection}>
-        <Header />
-        <MainComponent children={<></>} />
-      </div>
-    </main>
+    <WeatherProvider>
+      <main className={mainClass}>
+        <SideBar />
+        <div className={mainSection}>
+          <Header />
+          <MainComponent />
+        </div>
+      </main>
+    </WeatherProvider>
   );
 }

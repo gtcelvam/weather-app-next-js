@@ -1,5 +1,7 @@
 import React from "react";
 
-export const CityComponet = () => {
+const CityComponet = () => {
   return <div>CityComponet</div>;
 };
+
+export default CityComponet;

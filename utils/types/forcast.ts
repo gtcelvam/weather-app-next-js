@@ -16,6 +16,7 @@ export type OneDayTempratureValueType = {
 export type CurrentTempratureType = {
   status: string;
   temprature: TempratureValueType;
+  icon: string;
 };
 
 export type InitialForcastDetail = CurrentTempratureType & {

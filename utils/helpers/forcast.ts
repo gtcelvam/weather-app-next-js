@@ -1,4 +1,8 @@
-import { ACCUWEATHER_KEY, ACCUWEATHER_URL } from "../constants";
+import {
+  ACCUWEATHER_ICON_URL,
+  ACCUWEATHER_KEY,
+  ACCUWEATHER_URL,
+} from "../constants";
 import {
   CurrentTempratureType,
   ForecastPositionType,
@@ -6,7 +10,7 @@ import {
   OneDayTempratureValueType,
 } from "../types/forcast";
 import axios from "axios";
-import { fahrenheitToCelcuis } from ".";
+import { blobToBase64, fahrenheitToCelcuis } from ".";
 
 class Forecast {
   private apiKey: string | undefined;
@@ -80,7 +84,7 @@ class Forecast {
   }
 
   async getCurrentWeatherByKey(
-    key: number
+    key: number | string
   ): Promise<CurrentTempratureType | undefined> {
     try {
       const query = `/${key}/${this.apiQuery}`;
@@ -94,6 +98,7 @@ class Forecast {
           value: fahrenheitToCelcuis(Temperature.Value),
           unit: "C",
         },
+        icon: ACCUWEATHER_ICON_URL(data.WeatherIcon),
       };
     } catch (error) {}
   }

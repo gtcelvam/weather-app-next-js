@@ -1,8 +1,23 @@
-import React, { ReactNode } from "react";
+import React, { useContext } from "react";
+import WeatherComponent from "@/components/ui-components/weather";
+import CityComponet from "@/components/ui-components/cities";
+import LocationComponent from "@/components/ui-components/location";
+import SettingsComponent from "@/components/ui-components/settings";
+import { WeatherContext } from "@/components/provider";
 import S from "./style";
 
-const MainComponent = ({ children }: { children: ReactNode }) => {
-  return <div className={S.MainContainer}>{children}</div>;
+const componentsArr = [
+  <WeatherComponent />,
+  <CityComponet />,
+  <LocationComponent />,
+  <SettingsComponent />,
+];
+
+const MainComponent = () => {
+  //state values
+  const { active } = useContext(WeatherContext);
+
+  return <div className={S.MainContainer}>{componentsArr[active]}</div>;
 };
 
 export default MainComponent;
