@@ -16,7 +16,8 @@ import { WeatherContext } from "../provider";
 
 const Header = () => {
   //state values
-  const { handleCurrentWeather } = useContext(WeatherContext);
+  const { handleCurrentWeather, handleTwelveHoursWeather } =
+    useContext(WeatherContext);
   const [userLocation, setUserLocation] = useState<InitialForcastDetail | null>(
     null
   );
@@ -34,7 +35,8 @@ const Header = () => {
       ...(await ForcastDetails.getCurrentWeatherByKey(id)),
     };
     handleCurrentWeather(report);
-    console.log("Id : ", id);
+    let twelveHourseData = await ForcastDetails.getTwelveHourData(id);
+    handleTwelveHoursWeather(twelveHourseData);
     setSearchResult([]);
   };
 
@@ -48,10 +50,6 @@ const Header = () => {
   }, []);
 
   //functions
-  const handlePath = (route: string) => {
-    router.push(route);
-  };
-
   const handleInputChange = debounce(async (value: string) => {
     if (Boolean(value)) {
       const data = await ForcastDetails.getLocationByQuery(value);

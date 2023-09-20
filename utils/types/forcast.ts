@@ -24,3 +24,7 @@ export type InitialForcastDetail = CurrentTempratureType & {
   local: string;
   parentCityName?: string;
 };
+
+export interface TwelveHourWeatherType extends CurrentTempratureType {
+  date: string;
+}

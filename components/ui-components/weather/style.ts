@@ -6,10 +6,16 @@ namespace S {
     "flex flex-col items-start justify-between flex-[2] h-full px-6 py-2 gap-2";
 
   export const CurrentWeatherContainer =
-    "w-full h-[40%] flex items-center justify-between flex-[2] px-6 py-2";
+    "w-full h-[50%] flex items-center justify-between flex-[2] px-6 py-2";
 
   export const TodaysWeatherContainer =
-    "w-full h-[60%] border border-solid border-blue-500";
+    "w-full h-[25%] border border-solid border-blue-500 flex items-center justify-center gap-2 overflow-x-auto";
+
+  export const TodaysWeatherDetail =
+    "w-[80px] flex flex-col items-center justify-center gap-2";
+
+  export const AirConditionerContainer =
+    "w-full h-[25%] border border-solid border-blue-500";
 
   export const WeeklyWeatherContainer =
     "flex-1 h-full border border-solid border-blue-500";

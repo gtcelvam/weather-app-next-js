@@ -42,3 +42,11 @@ export const blobToBase64 = (blob: any) => {
     };
   });
 };
+
+export const getFormatedTime = (value: string) => {
+  let time = new Date(value);
+  let hour = time.getHours() < 10 ? `0${time.getHours()}` : time.getHours();
+  let minutes =
+    time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
+  return hour + ":" + minutes;
+};

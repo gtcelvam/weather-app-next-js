@@ -4,10 +4,16 @@ import React from "react";
 import Sunny from "../../../assests/images/icons/sunny.svg";
 import S from "./style";
 import { WeatherContext } from "@/components/provider";
+import {
+  CurrentTempratureType,
+  TwelveHourWeatherType,
+} from "@/utils/types/forcast";
 
 const WeatherComponent = () => {
   //state Values
-  const { currentWeather } = useContext(WeatherContext);
+  const { currentWeather, twelveHoursWeather } = useContext(WeatherContext);
+
+  console.log("Current Weather : ", currentWeather);
 
   return (
     <div className={S.WeatherContainer}>
@@ -23,7 +29,7 @@ const WeatherComponent = () => {
             </div>
             <div>
               <h1 className={S.WeatherDegree}>
-                {currentWeather?.temprature.value} °C
+                {currentWeather?.temprature?.value} °C
               </h1>
             </div>
           </div>
@@ -37,8 +43,28 @@ const WeatherComponent = () => {
         {/* Current Weather */}
 
         {/* Today's Weather */}
-        <div className={S.TodaysWeatherContainer}></div>
+        <div className={S.TodaysWeatherContainer}>
+          {twelveHoursWeather.map((weather: TwelveHourWeatherType) => (
+            <div
+              key={weather.date || Math.random()}
+              className={S.TodaysWeatherDetail}
+            >
+              <p className="text-lg text-gray-200">{weather.date}</p>
+              <Image
+                src={weather.icon}
+                alt="weather-status"
+                width={45}
+                height={45}
+              />
+              <p className="text-xs">{weather.temprature?.value}°C</p>
+            </div>
+          ))}
+        </div>
         {/* Today's Weather */}
+
+        {/* AirConditioner Details */}
+        <div className={S.AirConditionerContainer}></div>
+        {/* AirConditioner Details */}
       </div>
       <div className={S.WeeklyWeatherContainer}></div>
     </div>

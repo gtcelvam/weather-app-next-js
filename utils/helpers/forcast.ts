@@ -8,9 +8,10 @@ import {
   ForecastPositionType,
   InitialForcastDetail,
   OneDayTempratureValueType,
+  TwelveHourWeatherType,
 } from "../types/forcast";
 import axios from "axios";
-import { blobToBase64, fahrenheitToCelcuis } from ".";
+import { blobToBase64, fahrenheitToCelcuis, getFormatedTime } from ".";
 
 class Forecast {
   private apiKey: string | undefined;
@@ -19,6 +20,7 @@ class Forecast {
   private currentWeatherURL: string;
   private apiQuery: string;
   private locationByQueryURL: string;
+  private twelveHourQueryURL: string;
 
   constructor() {
     this.apiKey = ACCUWEATHER_KEY;
@@ -28,6 +30,7 @@ class Forecast {
     this.currentWeatherURL = ACCUWEATHER_URL + "/forecasts/v1/hourly/1hour";
     this.locationByQueryURL =
       ACCUWEATHER_URL + "/locations/v1/cities/autocomplete";
+    this.twelveHourQueryURL = ACCUWEATHER_URL + "/forecasts/v1/hourly/12hour";
     this.apiQuery = `?apikey=${this.apiKey}`;
   }
 
@@ -39,18 +42,13 @@ class Forecast {
       const query = `${this.apiQuery}&q=${latitude + "," + longitude}`;
       const url = this.geoPositionURL + query;
       let data = (await axios(url)).data;
-      const {
-        EnglishName,
-        Key,
-        LocalizedName,
-        ParentCity: { EnglishName: ParentName },
-      } = data;
+      const { EnglishName, Key, LocalizedName, ParentCity } = data;
       let weatherData = await this.getCurrentWeatherByKey(Key);
       return {
         ...weatherData,
         name: EnglishName,
         local: LocalizedName,
-        parentCityName: ParentName,
+        parentCityName: ParentCity?.EnglishName || "",
       } as InitialForcastDetail;
     } catch (error) {
       console.log("Get Location By Position Error : ", error);
@@ -101,6 +99,26 @@ class Forecast {
         icon: ACCUWEATHER_ICON_URL(data.WeatherIcon),
       };
     } catch (error) {}
+  }
+
+  async getTwelveHourData(key: number | string): Promise<any> {
+    const query = `/${key}/${this.apiQuery}`;
+    const url = this.twelveHourQueryURL + query;
+    let data = (await axios(url)).data;
+    console.log("twelveHoursWeather : ", data);
+    let updatedData: TwelveHourWeatherType[] = data.map((item: any) => {
+      const { IconPhrase, Temperature, WeatherIcon, DateTime } = item;
+      return {
+        status: IconPhrase,
+        temprature: {
+          value: fahrenheitToCelcuis(Temperature.Value),
+          unit: "C",
+        },
+        icon: ACCUWEATHER_ICON_URL(WeatherIcon),
+        date: getFormatedTime(DateTime),
+      };
+    });
+    return updatedData;
   }
 
   async getLocationByQuery(keyword: string) {
