@@ -1,5 +1,3 @@
-"use client";
-
 import React, { FC, useEffect, useState, useContext } from "react";
 import { debounce, getGeoLocation } from "@/utils/helpers";
 import {
@@ -16,8 +14,7 @@ import { WeatherContext } from "../provider";
 
 const Header = () => {
   //state values
-  const { handleCurrentWeather, handleTwelveHoursWeather } =
-    useContext(WeatherContext);
+  const { handleWeather } = useContext(WeatherContext);
   const [userLocation, setUserLocation] = useState<InitialForcastDetail | null>(
     null
   );
@@ -34,9 +31,12 @@ const Header = () => {
       name,
       ...(await ForcastDetails.getCurrentWeatherByKey(id)),
     };
-    handleCurrentWeather(report);
     let twelveHourseData = await ForcastDetails.getTwelveHourData(id);
-    handleTwelveHoursWeather(twelveHourseData);
+    handleWeather({
+      currentWeather: report,
+      twelveHoursWeather: twelveHourseData,
+    });
+    // handleTwelveHoursWeather(twelveHourseData);
     setSearchResult([]);
   };
 
@@ -44,7 +44,7 @@ const Header = () => {
     const getData = async () => {
       const data = await getInitialData();
       setUserLocation(data as InitialForcastDetail);
-      handleCurrentWeather(data);
+      handleWeather({ currentWeather: data });
     };
     if (!userLocation) getData();
   }, []);

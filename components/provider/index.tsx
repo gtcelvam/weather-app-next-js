@@ -29,18 +29,17 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
   //functions
   const handleToggle = (value: number) => setActive(value);
 
-  const handleCurrentWeather = (data: InitialForcastDetail) =>
-    setWeather({ currentWeather: data, ...weather } as WeatherDataProps);
-
-  const handleTwelveHoursWeather = (data: CurrentTempratureType[]) =>
-    setWeather({ twelveHoursWeather: data, ...weather } as WeatherDataProps);
+  const handleWeather = (data: InitialForcastDetail) => {
+    let updatedData = { ...weather, ...data };
+    console.log("Updated Data : ", updatedData);
+    setWeather(updatedData as WeatherDataProps);
+  };
 
   const providerValue = {
     active,
     currentWeather: weather?.currentWeather,
     twelveHoursWeather: weather?.twelveHoursWeather,
-    handleCurrentWeather,
-    handleTwelveHoursWeather,
+    handleWeather,
     handleToggle,
   };
   return (

@@ -8,6 +8,7 @@ import {
   CurrentTempratureType,
   TwelveHourWeatherType,
 } from "@/utils/types/forcast";
+import { SampleTwelveHoursData } from "@/utils/constants";
 
 const WeatherComponent = () => {
   //state Values
@@ -53,8 +54,8 @@ const WeatherComponent = () => {
               <Image
                 src={weather.icon}
                 alt="weather-status"
-                width={45}
-                height={45}
+                width={75}
+                height={75}
               />
               <p className="text-xs">{weather.temprature?.value}°C</p>
             </div>
