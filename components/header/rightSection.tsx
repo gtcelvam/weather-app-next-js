@@ -29,8 +29,9 @@ const HeaderRightSection: FC<HeaderRightProps> = (props) => {
       <CustomPopover
         isVisible={isVisible}
         title={`${userLocation?.name},${userLocation?.parentCityName}`}
-        children={<ForecastDetails userLocation={userLocation} />}
-      />
+      >
+        <ForecastDetails userLocation={userLocation} />
+      </CustomPopover>
       <div className={S.ForcastDetailsContainer + " hidden sm:flex"}>
         <p className="text-xs">{userLocation?.temprature.value} °C</p>
         <p className="text-xs">{userLocation?.status}</p>

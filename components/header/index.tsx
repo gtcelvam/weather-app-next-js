@@ -47,6 +47,7 @@ const Header = () => {
       handleWeather({ currentWeather: data });
     };
     if (!userLocation) getData();
+    // eslint-disable-next-line
   }, []);
 
   //functions

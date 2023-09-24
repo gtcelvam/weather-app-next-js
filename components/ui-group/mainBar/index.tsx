@@ -7,10 +7,10 @@ import { WeatherContext } from "@/components/provider";
 import S from "./style";
 
 const componentsArr = [
-  <WeatherComponent />,
-  <CityComponet />,
-  <LocationComponent />,
-  <SettingsComponent />,
+  <WeatherComponent key={0} />,
+  <CityComponet key={1} />,
+  <LocationComponent key={2} />,
+  <SettingsComponent key={3} />,
 ];
 
 const MainComponent = () => {
