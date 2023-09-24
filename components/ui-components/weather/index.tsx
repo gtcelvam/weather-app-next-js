@@ -50,14 +50,16 @@ const WeatherComponent = () => {
               key={weather.date || Math.random()}
               className={S.TodaysWeatherDetail}
             >
-              <p className="text-lg text-gray-200">{weather.date}</p>
+              <p className="text-sm md:text-lg text-gray-200">{weather.date}</p>
               <Image
                 src={weather.icon}
                 alt="weather-status"
                 width={75}
                 height={75}
               />
-              <p className="text-xs">{weather.temprature?.value}°C</p>
+              <p className="text-[8px] md:text-xs">
+                {weather.temprature?.value}°C
+              </p>
             </div>
           ))}
         </div>
