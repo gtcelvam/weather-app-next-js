@@ -11,7 +11,12 @@ import {
   TwelveHourWeatherType,
 } from "../types/forcast";
 import axios from "axios";
-import { blobToBase64, fahrenheitToCelcuis, getFormatedTime } from ".";
+import {
+  blobToBase64,
+  fahrenheitToCelcuis,
+  getFormatedDay,
+  getFormatedTime,
+} from ".";
 
 class Forecast {
   private apiKey: string | undefined;
@@ -21,6 +26,7 @@ class Forecast {
   private apiQuery: string;
   private locationByQueryURL: string;
   private twelveHourQueryURL: string;
+  private fiveDaysQueryURL: string;
 
   constructor() {
     this.apiKey = ACCUWEATHER_KEY;
@@ -31,6 +37,7 @@ class Forecast {
     this.locationByQueryURL =
       ACCUWEATHER_URL + "/locations/v1/cities/autocomplete";
     this.twelveHourQueryURL = ACCUWEATHER_URL + "/forecasts/v1/hourly/12hour";
+    this.fiveDaysQueryURL = ACCUWEATHER_URL + "/forecasts/v1/daily/5day/";
     this.apiQuery = `?apikey=${this.apiKey}`;
   }
 
@@ -116,6 +123,28 @@ class Forecast {
         },
         icon: ACCUWEATHER_ICON_URL(WeatherIcon),
         date: getFormatedTime(DateTime),
+      };
+    });
+    return updatedData;
+  }
+
+  async getFiveDaysWeatherDataByKey(key: number | string): Promise<any> {
+    const query = `${key}/${this.apiQuery}`;
+    const url = this.fiveDaysQueryURL + query;
+    let data = (await axios.get(url)).data.DailyForecasts;
+    console.log("Date Time : ", data);
+    let updatedData = data.map((item: any) => {
+      const { Date, Day, Temperature } = item;
+      return {
+        date: getFormatedDay(Date),
+        icon: ACCUWEATHER_ICON_URL(Day.Icon),
+        temprature: {
+          value: fahrenheitToCelcuis(
+            (Temperature.Maximum.Value + Temperature.Minimum.Value) / 2
+          ),
+          unit: "C",
+        },
+        status: Day.IconPhrase,
       };
     });
     return updatedData;

@@ -1,6 +1,7 @@
 import {
   CurrentTempratureType,
   InitialForcastDetail,
+  TwelveHourWeatherType,
 } from "@/utils/types/forcast";
 import { FC, ReactNode, createContext, useState } from "react";
 
@@ -12,7 +13,8 @@ interface WeatherProviderPropsType {
 
 interface WeatherDataProps {
   currentWeather: InitialForcastDetail | null;
-  twelveHoursWeather: CurrentTempratureType[];
+  twelveHoursWeather: TwelveHourWeatherType[];
+  fiveDaysWeather: TwelveHourWeatherType[];
 }
 
 const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
@@ -24,6 +26,7 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
   const [weather, setWeather] = useState<WeatherDataProps | null>({
     currentWeather: null,
     twelveHoursWeather: [],
+    fiveDaysWeather: [],
   });
 
   //functions
@@ -39,6 +42,7 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
     active,
     currentWeather: weather?.currentWeather,
     twelveHoursWeather: weather?.twelveHoursWeather,
+    fiveDaysWeather: weather?.fiveDaysWeather,
     handleWeather,
     handleToggle,
   };
