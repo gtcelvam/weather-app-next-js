@@ -32,7 +32,7 @@ namespace S {
   export const FiveDaysWeatherTitle = "text-gray-500";
 
   export const FiveDaysWeatherContainer =
-    "h-full flex flex-col items-start justify-around gap-5";
+    "w-full h-full flex flex-col items-start justify-around gap-5";
 
   export const FiveDaysWeatherCard =
     "w-full flex items-center justify-between gap-2";
