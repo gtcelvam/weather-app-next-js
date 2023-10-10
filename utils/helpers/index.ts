@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getGeoLocation = async () => {
   let data;
   const getData = () =>
@@ -50,3 +52,6 @@ export const getFormatedTime = (value: string) => {
     time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
   return hour + ":" + minutes;
 };
+
+export const getFormatedDay = (value: string) =>
+  moment(value).format("MMM Do YYYY");

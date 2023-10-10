@@ -18,7 +18,7 @@ namespace S {
     "w-full  bg-elementBg rounded-lg px-2 md:h-[25%]";
 
   export const WeeklyWeatherContainer =
-    "w-full h-full bg-elementBg rounded-lg p-2 md:w-[20%]";
+    "w-full h-full bg-elementBg rounded-lg p-4 flex flex-col items-start gap-5  md:w-[20%]";
 
   export const WeatherReportContainer =
     "flex flex-col h-full justify-evenly items-start";
@@ -28,6 +28,17 @@ namespace S {
   export const WeatherStatus = "text-sm text-gray-400";
 
   export const WeatherDegree = "md:text-[60px] font-bold";
+
+  export const FiveDaysWeatherTitle = "text-gray-500";
+
+  export const FiveDaysWeatherContainer =
+    "h-full flex flex-col items-start justify-around gap-5";
+
+  export const FiveDaysWeatherCard =
+    "w-full flex items-center justify-between gap-2";
+
+  export const HorizontalDivider =
+    "w-full h-[0.1rem] border border-solid border-gray-200 opacity-10";
 }
 
 export default S;

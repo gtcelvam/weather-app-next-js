@@ -2,7 +2,7 @@ namespace S {
   export const HeaderContainer =
     "w-full flex items-center justify-between h-10 text-white flex items-center gap-1";
   export const HeaderLocationContainer =
-    "flex flex-col items-center justify-center relative";
+    "flex flex-col items-center justify-center relative gap-2";
   export const LocationDetailsContainer = "flex items-center justify-between";
   export const ForcastDetailsContainer =
     "flex-col items-center justify-center gap-4 sm:flex-row";

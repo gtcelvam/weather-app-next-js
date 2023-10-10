@@ -33,9 +33,13 @@ const Header = () => {
       ...(await ForcastDetails.getCurrentWeatherByKey(id)),
     };
     let twelveHourseData = await ForcastDetails.getTwelveHourData(id);
+    let fiveDaysWeatherData = await ForcastDetails.getFiveDaysWeatherDataByKey(
+      id
+    );
     handleWeather({
       currentWeather: report,
       twelveHoursWeather: twelveHourseData,
+      fiveDaysWeather: fiveDaysWeatherData,
     });
     setSearchResult([]);
   };
