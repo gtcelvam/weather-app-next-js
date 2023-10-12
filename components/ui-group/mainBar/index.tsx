@@ -5,6 +5,7 @@ import LocationComponent from "@/components/ui-components/location";
 import SettingsComponent from "@/components/ui-components/settings";
 import { WeatherContext } from "@/components/provider";
 import S from "./style";
+import Loader from "@/components/ui-elements/loader";
 
 const componentsArr = [
   <WeatherComponent key={0} />,
@@ -15,9 +16,9 @@ const componentsArr = [
 
 const MainComponent = () => {
   //state values
-  const { active } = useContext(WeatherContext);
-
-  return <div className={S.MainContainer}>{componentsArr[active]}</div>;
+  const { active, isWeatherLoading } = useContext(WeatherContext);
+  const component = isWeatherLoading ? <Loader /> : componentsArr[active];
+  return <div className={S.MainContainer}>{component}</div>;
 };
 
 export default MainComponent;

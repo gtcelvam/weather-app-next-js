@@ -28,6 +28,7 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
     twelveHoursWeather: [],
     fiveDaysWeather: [],
   });
+  const [isWeatherLoading, setIsWeatherLoading] = useState(false);
 
   //functions
   const handleToggle = (value: number) => setActive(value);
@@ -43,6 +44,8 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
     currentWeather: weather?.currentWeather,
     twelveHoursWeather: weather?.twelveHoursWeather,
     fiveDaysWeather: weather?.fiveDaysWeather,
+    isWeatherLoading,
+    setIsWeatherLoading,
     handleWeather,
     handleToggle,
   };

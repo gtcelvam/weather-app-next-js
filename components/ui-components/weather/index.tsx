@@ -1,21 +1,14 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
-import React from "react";
-import Sunny from "../../../assests/images/icons/sunny.svg";
 import S from "./style";
 import { WeatherContext } from "@/components/provider";
-import {
-  CurrentTempratureType,
-  TwelveHourWeatherType,
-} from "@/utils/types/forcast";
+import { TwelveHourWeatherType } from "@/utils/types/forcast";
 import { SampleTwelveHoursData } from "@/utils/constants";
 
 const WeatherComponent = () => {
   //state Values
   const { currentWeather, twelveHoursWeather, fiveDaysWeather } =
     useContext(WeatherContext);
-
-  console.log("fiveDaysWeather : ", fiveDaysWeather);
 
   return (
     <div className={S.WeatherContainer}>
@@ -79,7 +72,7 @@ const WeatherComponent = () => {
             const date = item.date.split(" ");
             const weather = item.status.split(" ");
             const updatedDate = date[0] + " " + date[1];
-            const updatedWeather = weather[0] + " " + weather[1];
+            const updatedWeather = weather[0] + " " + (weather[1] ?? "");
             return (
               <>
                 <div className={S.FiveDaysWeatherCard} key={Math.random()}>

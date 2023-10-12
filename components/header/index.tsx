@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { debounce, getGeoLocation } from "@/utils/helpers";
 import {
   ForecastPositionType,
+  GetLocationReturnType,
   InitialForcastDetail,
 } from "@/utils/types/forcast";
 import { useRouter } from "next/router";
@@ -15,7 +16,7 @@ import HeaderRightSection from "./rightSection";
 
 const Header = () => {
   //state values
-  const { handleWeather } = useContext(WeatherContext);
+  const { handleWeather, setIsWeatherLoading } = useContext(WeatherContext);
   const [userLocation, setUserLocation] = useState<InitialForcastDetail | null>(
     null
   );
@@ -28,6 +29,7 @@ const Header = () => {
     : "hidden";
 
   const handleDropDownClick = async (id: number | string, name?: string) => {
+    setIsWeatherLoading(true);
     let report = {
       name,
       ...(await ForcastDetails.getCurrentWeatherByKey(id)),
@@ -42,13 +44,16 @@ const Header = () => {
       fiveDaysWeather: fiveDaysWeatherData,
     });
     setSearchResult([]);
+    setIsWeatherLoading(false);
   };
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getInitialData();
-      setUserLocation(data as InitialForcastDetail);
-      handleWeather({ currentWeather: data });
+      setIsWeatherLoading(true);
+      const data = (await getInitialData()) as GetLocationReturnType;
+      setUserLocation(data.currentWeather);
+      handleWeather(data);
+      setIsWeatherLoading(false);
     };
     if (!userLocation) getData();
     // eslint-disable-next-line
@@ -93,7 +98,7 @@ const Header = () => {
 export default Header;
 
 const getInitialData: () => Promise<
-  InitialForcastDetail | null | undefined
+  GetLocationReturnType | null | undefined
 > = async () => {
   try {
     let result: any = await getGeoLocation();
