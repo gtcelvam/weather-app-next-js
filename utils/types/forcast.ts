@@ -28,3 +28,9 @@ export type InitialForcastDetail = CurrentTempratureType & {
 export interface TwelveHourWeatherType extends CurrentTempratureType {
   date: string;
 }
+
+export interface GetLocationReturnType {
+  currentWeather: InitialForcastDetail;
+  twelveHoursWeather: TwelveHourWeatherType[];
+  fiveDaysWeather: TwelveHourWeatherType[];
+}

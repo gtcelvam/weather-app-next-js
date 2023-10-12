@@ -6,6 +6,7 @@ import {
 import {
   CurrentTempratureType,
   ForecastPositionType,
+  GetLocationReturnType,
   InitialForcastDetail,
   OneDayTempratureValueType,
   TwelveHourWeatherType,
@@ -43,7 +44,7 @@ class Forecast {
 
   async getLocationByPosition(
     position: ForecastPositionType
-  ): Promise<InitialForcastDetail | undefined> {
+  ): Promise<GetLocationReturnType | undefined> {
     try {
       const { latitude, longitude } = position;
       const query = `${this.apiQuery}&q=${latitude + "," + longitude}`;
@@ -51,12 +52,19 @@ class Forecast {
       let data = (await axios(url)).data;
       const { EnglishName, Key, LocalizedName, ParentCity } = data;
       let weatherData = await this.getCurrentWeatherByKey(Key);
-      return {
+      let currentWeather = {
         ...weatherData,
         name: EnglishName,
         local: LocalizedName,
         parentCityName: ParentCity?.EnglishName || "",
       } as InitialForcastDetail;
+      let twelveHoursWeather = await this.getTwelveHourData(Key);
+      let fiveDaysWeather = await this.getFiveDaysWeatherDataByKey(Key);
+      return {
+        currentWeather,
+        twelveHoursWeather,
+        fiveDaysWeather,
+      };
     } catch (error) {
       console.log("Get Location By Position Error : ", error);
     }
