@@ -3,12 +3,28 @@ import Image from "next/image";
 import S from "./style";
 import { WeatherContext } from "@/components/provider";
 import { TwelveHourWeatherType } from "@/utils/types/forcast";
-import { SampleTwelveHoursData } from "@/utils/constants";
+import { getFormatedTime, timeStampToTime } from "@/utils/helpers";
+import IconContainer from "@/components/ui-elements/icons";
+import {
+  FeelsLikeIcon,
+  HumidityIcon,
+  SunRiseIcon,
+  SunSet,
+} from "@/assests/icons";
 
 const WeatherComponent = () => {
   //state Values
-  const { currentWeather, twelveHoursWeather, fiveDaysWeather } =
-    useContext(WeatherContext);
+  const {
+    currentWeather,
+    twelveHoursWeather,
+    fiveDaysWeather,
+    currentWindData,
+  } = useContext(WeatherContext);
+
+  const humidity = currentWindData?.main?.humidity;
+  const feelsLike = currentWindData?.main?.feels_like;
+  const sunRise = timeStampToTime(currentWindData?.sys?.sunrise);
+  const sunSet = timeStampToTime(currentWindData?.sys?.sunset);
 
   return (
     <div className={S.WeatherContainer}>
@@ -62,7 +78,27 @@ const WeatherComponent = () => {
         {/* Today's Weather */}
 
         {/* AirConditioner Details */}
-        <div className={S.AirConditionerContainer}></div>
+        <div className={S.AirConditionerContainer}>
+          <h1 className="text-white text-lg font-bold">Weather Condition</h1>
+          <div className={S.AirConditionDetailsContainer}>
+            <div className={S.AirConditionDetail + " md:justify-self-start"}>
+              <SunRiseIcon />
+              <p>Sun Rise : {sunRise}</p>
+            </div>
+            <div className={S.AirConditionDetail + " md:justify-self-end"}>
+              <SunSet />
+              <p>Sun Set : {sunSet}</p>
+            </div>
+            <div className={S.AirConditionDetail + " md:justify-self-start"}>
+              <HumidityIcon />
+              <p>Feels Like : {feelsLike}</p>
+            </div>
+            <div className={S.AirConditionDetail + " md:justify-self-end"}>
+              <FeelsLikeIcon />
+              <p>Humidity : {humidity}</p>
+            </div>
+          </div>
+        </div>
         {/* AirConditioner Details */}
       </div>
       <div className={S.WeeklyWeatherContainer}>

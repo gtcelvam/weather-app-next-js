@@ -7,7 +7,7 @@ import S from "./style";
 import { InitialForcastDetail } from "@/utils/types/forcast";
 
 interface HeaderRightProps {
-  userLocation: InitialForcastDetail | null;
+  userLocation: InitialForcastDetail | null | undefined;
   handleClick: () => void;
   isVisible: boolean;
 }
@@ -43,7 +43,7 @@ const HeaderRightSection: FC<HeaderRightProps> = (props) => {
 export default HeaderRightSection;
 
 type ForcastDetailsType = {
-  userLocation: InitialForcastDetail | null;
+  userLocation: InitialForcastDetail | null | undefined;
 };
 const ForecastDetails = (props: ForcastDetailsType) => {
   //props

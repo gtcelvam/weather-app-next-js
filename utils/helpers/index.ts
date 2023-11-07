@@ -1,4 +1,6 @@
+import axios from "axios";
 import moment from "moment";
+import { ONEWEATHER_KEY, ONEWEATHER_URL } from "../constants";
 
 export const getGeoLocation = async () => {
   let data;
@@ -46,6 +48,7 @@ export const blobToBase64 = (blob: any) => {
 };
 
 export const getFormatedTime = (value: string) => {
+  console.log("Value : ", value);
   let time = new Date(value);
   let hour = time.getHours() < 10 ? `0${time.getHours()}` : time.getHours();
   let minutes =
@@ -55,3 +58,23 @@ export const getFormatedTime = (value: string) => {
 
 export const getFormatedDay = (value: string) =>
   moment(value).format("MMM Do YYYY");
+
+export const timeStampToTime = (value: number) => {
+  return moment.unix(value).format("hh:mm A");
+};
+
+type LatLongType = {
+  lat: number;
+  long: number;
+};
+export const getWindSpeedAndVisiblity = async ({ lat, long }: LatLongType) => {
+  const url = `${ONEWEATHER_URL}/data/2.5/weather?lat=${lat}&lon=${long}&appid=${ONEWEATHER_KEY}&units=metric`;
+  try {
+    const { data }: any = await axios.get(url);
+    return data || {};
+  } catch (error) {
+    console.log("Error : ", error);
+    let result = {};
+    return result;
+  }
+};

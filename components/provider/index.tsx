@@ -15,6 +15,7 @@ interface WeatherDataProps {
   currentWeather: InitialForcastDetail | null;
   twelveHoursWeather: TwelveHourWeatherType[];
   fiveDaysWeather: TwelveHourWeatherType[];
+  currentWindData?: any;
 }
 
 const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
@@ -27,6 +28,7 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
     currentWeather: null,
     twelveHoursWeather: [],
     fiveDaysWeather: [],
+    currentWindData: {},
   });
   const [isWeatherLoading, setIsWeatherLoading] = useState(false);
 
@@ -44,6 +46,7 @@ const WeatherProvider: FC<WeatherProviderPropsType> = (props) => {
     currentWeather: weather?.currentWeather,
     twelveHoursWeather: weather?.twelveHoursWeather,
     fiveDaysWeather: weather?.fiveDaysWeather,
+    currentWindData: weather?.currentWindData,
     isWeatherLoading,
     setIsWeatherLoading,
     handleWeather,
