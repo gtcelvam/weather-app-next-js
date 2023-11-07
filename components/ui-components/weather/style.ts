@@ -6,7 +6,7 @@ namespace S {
     "w-full flex flex-col items-start justify-between h-full py-2 gap-2 md:w-[80%] md:px-6";
 
   export const CurrentWeatherContainer =
-    "w-full  flex items-center justify-between flex-[2] px-6 py-2 md:h-[50%]";
+    "w-full  flex items-center justify-between flex-[2] md:px-6 md:py-2 md:h-[50%]";
 
   export const TodaysWeatherContainer =
     "w-full  flex items-center justify-start gap-2 overflow-x-auto bg-elementBg rounded-lg px-2 py-2 md:h-[25%] md:py-auto md:justify-center";
@@ -15,7 +15,7 @@ namespace S {
     "w-[80px] flex flex-col items-center justify-center gap-2";
 
   export const AirConditionerContainer =
-    "w-full  bg-elementBg rounded-lg px-2 md:h-[25%]";
+    "w-full  bg-elementBg rounded-lg p-4 text-gray-400 md:h-[25%]";
 
   export const WeeklyWeatherContainer =
     "w-full h-full bg-elementBg rounded-lg p-4 flex flex-col items-start gap-5  md:w-[20%]";
@@ -39,6 +39,12 @@ namespace S {
 
   export const HorizontalDivider =
     "w-full h-[0.1rem] border border-solid border-gray-200 opacity-10";
+
+  export const AirConditionDetailsContainer =
+    "w-full h-full md:grid md:grid-cols-2";
+
+  export const AirConditionDetail =
+    "flex items-center justify-start md:justify-center gap-1";
 }
 
 export default S;

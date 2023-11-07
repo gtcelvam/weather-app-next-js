@@ -29,6 +29,13 @@ export interface TwelveHourWeatherType extends CurrentTempratureType {
   date: string;
 }
 
+export type GetLocationWeatherDataType = {
+  data: GetLocationReturnType | undefined | null;
+  windData: object;
+};
+
+export type GetLocationWindDataType = string;
+
 export interface GetLocationReturnType {
   currentWeather: InitialForcastDetail;
   twelveHoursWeather: TwelveHourWeatherType[];

@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { debounce, getGeoLocation } from "@/utils/helpers";
+import {
+  debounce,
+  getGeoLocation,
+  getWindSpeedAndVisiblity,
+} from "@/utils/helpers";
 import {
   ForecastPositionType,
   GetLocationReturnType,
+  GetLocationWeatherDataType,
   InitialForcastDetail,
 } from "@/utils/types/forcast";
 import { useRouter } from "next/router";
@@ -17,9 +22,9 @@ import HeaderRightSection from "./rightSection";
 const Header = () => {
   //state values
   const { handleWeather, setIsWeatherLoading } = useContext(WeatherContext);
-  const [userLocation, setUserLocation] = useState<InitialForcastDetail | null>(
-    null
-  );
+  const [userLocation, setUserLocation] = useState<
+    InitialForcastDetail | undefined | null
+  >(null);
   const [searchResult, setSearchResult] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -50,9 +55,10 @@ const Header = () => {
   useEffect(() => {
     const getData = async () => {
       setIsWeatherLoading(true);
-      const data = (await getInitialData()) as GetLocationReturnType;
-      setUserLocation(data.currentWeather);
-      handleWeather(data);
+      const { data, windData } =
+        (await getInitialData()) as GetLocationWeatherDataType;
+      setUserLocation(data?.currentWeather);
+      handleWeather({ ...data, currentWindData: windData });
       setIsWeatherLoading(false);
     };
     if (!userLocation) getData();
@@ -98,7 +104,7 @@ const Header = () => {
 export default Header;
 
 const getInitialData: () => Promise<
-  GetLocationReturnType | null | undefined
+  GetLocationWeatherDataType | null | undefined
 > = async () => {
   try {
     let result: any = await getGeoLocation();
@@ -108,7 +114,15 @@ const getInitialData: () => Promise<
       latitude,
       longitude,
     });
-    return data || null;
+    const windData = await getWindSpeedAndVisiblity({
+      lat: latitude,
+      long: longitude,
+    });
+    let resultData = {
+      data,
+      windData,
+    };
+    return resultData || null;
   } catch (error) {
     console.log("Error from getInitialData : ", error);
   }
