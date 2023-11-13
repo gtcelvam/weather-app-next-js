@@ -3,8 +3,7 @@ import Image from "next/image";
 import S from "./style";
 import { WeatherContext } from "@/components/provider";
 import { TwelveHourWeatherType } from "@/utils/types/forcast";
-import { getFormatedTime, timeStampToTime } from "@/utils/helpers";
-import IconContainer from "@/components/ui-elements/icons";
+import { timeStampToTime } from "@/utils/helpers";
 import {
   FeelsLikeIcon,
   HumidityIcon,
