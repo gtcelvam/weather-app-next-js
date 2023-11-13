@@ -6,11 +6,9 @@ import {
 } from "@/utils/helpers";
 import {
   ForecastPositionType,
-  GetLocationReturnType,
   GetLocationWeatherDataType,
   InitialForcastDetail,
 } from "@/utils/types/forcast";
-import { useRouter } from "next/router";
 import S from "./style";
 import SearchBar from "../ui-elements/search";
 import { HamBurgerIcon } from "@/assests/icons";
@@ -43,10 +41,17 @@ const Header = () => {
     let fiveDaysWeatherData = await ForcastDetails.getFiveDaysWeatherDataByKey(
       id
     );
+    let { lat, long } = await ForcastDetails.getLatLongByKey(id);
+    const windData = await getWindSpeedAndVisiblity({
+      lat,
+      long,
+    });
+
     handleWeather({
       currentWeather: report,
       twelveHoursWeather: twelveHourseData,
       fiveDaysWeather: fiveDaysWeatherData,
+      currentWindData: windData,
     });
     setSearchResult([]);
     setIsWeatherLoading(false);

@@ -28,6 +28,7 @@ class Forecast {
   private locationByQueryURL: string;
   private twelveHourQueryURL: string;
   private fiveDaysQueryURL: string;
+  private getLatLongByKeyURL: string;
 
   constructor() {
     this.apiKey = ACCUWEATHER_KEY;
@@ -39,6 +40,7 @@ class Forecast {
       ACCUWEATHER_URL + "/locations/v1/cities/autocomplete";
     this.twelveHourQueryURL = ACCUWEATHER_URL + "/forecasts/v1/hourly/12hour";
     this.fiveDaysQueryURL = ACCUWEATHER_URL + "/forecasts/v1/daily/5day/";
+    this.getLatLongByKeyURL = ACCUWEATHER_URL + "/locations/v1/";
     this.apiQuery = `?apikey=${this.apiKey}`;
   }
 
@@ -168,6 +170,17 @@ class Forecast {
         name: item.LocalizedName,
       };
     });
+  }
+
+  async getLatLongByKey(key: string | number) {
+    const query = `${key}/${this.apiQuery}`;
+    const url = this.getLatLongByKeyURL + query;
+    let data = (await axios(url)).data;
+
+    return {
+      lat: data?.GeoPosition?.Latitude || "",
+      long: data?.GeoPosition?.Longitude || "",
+    };
   }
 }
 
