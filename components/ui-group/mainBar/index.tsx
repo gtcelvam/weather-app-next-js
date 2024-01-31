@@ -15,9 +15,11 @@ const componentsArr = [
 ];
 
 const MainComponent = () => {
+  const loader = <div>Loading...</div>;
+
   //state values
   const { active, isWeatherLoading } = useContext(WeatherContext);
-  const component = isWeatherLoading ? <Loader /> : componentsArr[active];
+  const component = isWeatherLoading ? loader : componentsArr[active];
   return <div className={S.MainContainer}>{component}</div>;
 };
 
