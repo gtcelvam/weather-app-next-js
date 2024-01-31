@@ -1,5 +1,5 @@
 import React from "react";
-import LoaderIcon from "../../../assests/images/icons/loader.gif";
+import LoaderIcon from "../../../assests/images/icons/loader.webp";
 import Image from "next/image";
 
 const Loader = () => {
@@ -9,8 +9,8 @@ const Loader = () => {
         className="mix-blend-color-dodge"
         src={LoaderIcon}
         alt="loader-icon"
-        width={150}
-        height={150}
+        width={300}
+        height={300}
       />
     </div>
   );
